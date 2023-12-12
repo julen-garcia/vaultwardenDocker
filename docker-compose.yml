@@ -5,6 +5,7 @@ services:
     container_name: bitwarden
     image: vaultwarden/server:latest
     restart: unless-stopped
+    privileged: true
     volumes:
       - /var/lib/docker/volumes/Bitwarden/_data/:/data/
     ports:

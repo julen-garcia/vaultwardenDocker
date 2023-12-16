@@ -1,0 +1,4 @@
+[submodule "vaultwardenBackup"]
+	path = vaultwardenBackup
+	url = ../vaultwardenBackup.git
+	branch = master

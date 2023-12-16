@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # go to the directory
-cd ~/gitrepos/bitwardenDocker/
+cd ~/gitrepos/vaultwardenDocker
 
 
 # update usign docker-compose

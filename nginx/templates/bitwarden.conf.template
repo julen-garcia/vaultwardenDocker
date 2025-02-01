@@ -1,0 +1,47 @@
+# Server config for Bitwarden Vault
+
+server {
+        listen 80;
+        listen [::]:80;
+        server_name ${NGINX_HOST};
+        access_log  /var/log/nginx/bitwarden.access.log custom;
+        return 301 https://$host$request_uri;
+}
+
+
+server {
+        listen ${NGINX_PORT} ssl;
+        http2 on;
+        server_name ${NGINX_HOST};
+
+        access_log /var/log/nginx/bitwarden.access.log custom;
+
+        ssl_certificate ${SSL_CERTIFICATE};
+        ssl_certificate_key ${SSL_CERTIFICATE_KEY};
+
+        #ssl_certificate /etc/tailscale_certs/vaultwarden.dog-chameleon.ts.net.crt;
+        #ssl_certificate_key /etc/tailscale_certs/vaultwarden.dog-chameleon.ts.net.key;
+
+        #ssl_dhparam /etc/letsencrypt/acme-account.key.pem;
+
+        # Allow large attachments
+        client_max_body_size 128M;
+
+        location / {
+                proxy_pass http://0.0.0.0:8080;
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Proto $scheme;
+        }
+
+        location /notifications/hub {
+                proxy_pass http://0.0.0.0:3012;
+                proxy_set_header Upgrade $http_upgrade;
+                proxy_set_header Connection "upgrade";
+        }
+
+        location /notifications/hub/negotiate {
+                proxy_pass http://0.0.0.0:8080;
+        }
+}

@@ -21,15 +21,17 @@ services:
 
 
   web:
-    image: nginx
+    build: ./nginx
     container_name: nginx-vaultwarden
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./nginx/templates:/etc/nginx/templates
-      - ${PWD}/tailscale/state/certs/:/etc/letsencrypt/:ro
+      - ${PWD}/tailscale/state/certs/:/etc/tailscale_certs/:ro
     environment:
       - NGINX_HOST=vaultwarden.dog-chameleon.ts.net
       - NGINX_PORT=443
+      - SSL_CERTIFICATE=/etc/tailscale_certs/vaultwarden.dog-chameleon.ts.net.crt
+      - SSL_CERTIFICATE_KEY=/etc/tailscale_certs/vaultwarden.dog-chameleon.ts.net.key
     network_mode: service:ts-vaultwarden
     depends_on:
       - ts-vaultwarden

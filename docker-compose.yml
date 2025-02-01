@@ -21,8 +21,7 @@ services:
 
 
   web:
-    build: ./nginx
-    image: custom_nginx
+    image: nginx
     container_name: nginx-vaultwarden
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro

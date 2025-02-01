@@ -13,3 +13,6 @@ docker image prune -f
 #sudo systemctl stop nginx
 #sudo certbot renew
 #sudo systemctl start nginx
+
+docker exec -it ts-vaultwarden tailscale cert vaultwarden.dog-chameleon.ts.net
+

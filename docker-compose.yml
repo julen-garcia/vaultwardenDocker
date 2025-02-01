@@ -25,7 +25,7 @@ services:
     image: custom_nginx
     container_name: nginx-vaultwarden
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./nginx/templates:/etc/nginx/templates
       - ${PWD}/tailscale/state/certs/:/etc/tailscale_certs/:ro
     environment:
